@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-5 w-120 mt-5 m-auto border rounded-xl p-10">
+  <h2 class="text-3xl">Sign up</h2>
+  @if (errorMessage()) {
+    <div>{{ errorMessage() }}</div>
+  }
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-3">
+    <mat-form-field>
+      <mat-label>User name</mat-label>
+      <input matInput name="userName" formControlName="userName" placeholder="User name"/>
+      <mat-error>{{ signUpForm.get('userName')?.errors | errorMessage }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>E-mail</mat-label>
+      <input matInput name="email" type="email" formControlName="email" placeholder="email@example.com"/>
+      <mat-error>{{ signUpForm.get('email')?.errors | errorMessage }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput name="password" type="password" formControlName="password" placeholder="********"/>
+      <mat-error>{{ signUpForm.get('password')?.errors | errorMessage }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Repeat password</mat-label>
+      <input matInput name="repeatPassword" type="password" formControlName="repeatPassword" placeholder="********"/>
+      <mat-error>{{ signUpForm.get('repeatPassword')?.errors | errorMessage }}</mat-error>
+      <mat-error>{{ signUpForm.errors | errorMessage }}</mat-error>
+    </mat-form-field>
+    <button matButton="filled" type="submit">Sign up</button>
+  </form>
+</div>

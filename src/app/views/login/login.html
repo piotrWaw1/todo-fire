@@ -1,0 +1,21 @@
+<div class="flex flex-col gap-5 w-120 mt-5 m-auto border rounded-xl p-10">
+  <h2 class="text-3xl">Login</h2>
+  @if (errorMessage()) {
+    <div>{{ errorMessage() }}</div>
+  }
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-3">
+    <mat-form-field class="example-full-width">
+      <mat-label>E-mail</mat-label>
+      <input matInput name="email" type="email" formControlName="email" placeholder="email@example.com">
+      <mat-error> {{ loginForm.get('email')?.errors | errorMessage }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="********">
+      <mat-error>
+        {{ loginForm.get("password")?.errors | errorMessage }}
+      </mat-error>
+    </mat-form-field>
+    <button matButton="filled" type="submit">Log in</button>
+  </form>
+</div>
