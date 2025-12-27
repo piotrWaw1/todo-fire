@@ -35,7 +35,7 @@ export class Login {
 
   onSubmit() {
     const formValue = this.loginForm.getRawValue()
-    console.log(formValue)
+
     this.authService.login(formValue.email, formValue.password).subscribe({
       next: () => {
         this.router.navigateByUrl('/').then();
@@ -44,6 +44,5 @@ export class Login {
         this.errorMessage.set(err.code)
       }
     })
-    console.log(this.loginForm.value)
   }
 }

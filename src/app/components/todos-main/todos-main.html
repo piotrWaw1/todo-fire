@@ -1,0 +1,7 @@
+<div class="w-full">
+  @for (todo of todosService.todos(); track todo.id) {
+    <app-todo [todo]="todo"/>
+  } @empty {
+    <div class="no-todos">No todos found</div>
+  }
+</div>

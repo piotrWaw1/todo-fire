@@ -1,0 +1,4 @@
+<mat-form-field class="w-full">
+  <mat-label>Add task</mat-label>
+  <input matInput name="addTodo" type="text" (keydown.enter)="addTodo()" [(ngModel)]="todoTitle">
+</mat-form-field>
