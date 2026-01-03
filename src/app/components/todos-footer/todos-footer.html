@@ -1,0 +1,25 @@
+<div id="footer">
+  <p>Finished: {{ todoCompletedCount() }}
+    of {{ todosLen() }}
+  </p>
+  <div id="filterButtons">
+    <button
+      (click)="todoFireService.setFilter(Filter.all)"
+      [ngClass]="{activeButton: todoFireService.filter() === Filter.all}"
+    >
+      All
+    </button>
+    <button
+      (click)="todoFireService.setFilter(Filter.done)"
+      [ngClass]="{activeButton: todoFireService.filter() === Filter.done}"
+    >
+      Done
+    </button>
+    <button
+      (click)="todoFireService.setFilter(Filter.inProgress)"
+      [ngClass]="{activeButton: todoFireService.filter() === Filter.inProgress}"
+    >
+      In progress
+    </button>
+  </div>
+</div>

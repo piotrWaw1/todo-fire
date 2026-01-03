@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { TodoInterface } from '../../type/todo.interface';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -28,5 +29,4 @@ export class TodoService {
         : todo
     )))
   }
-
 }

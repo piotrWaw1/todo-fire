@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import {
   addDoc,
   collection,
@@ -13,6 +13,8 @@ import {
 import { from, Observable } from 'rxjs';
 import { TodoInterface } from '../../type/todo.interface';
 import { AuthService } from '../auth/auth.service';
+import { Filter } from '../../type/filter.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +22,11 @@ import { AuthService } from '../auth/auth.service';
 export class TodosFirebaseService {
   private firestore = inject(Firestore);
   private authService = inject(AuthService);
+
+  filter = signal<Filter>(Filter.all)
+
+  private router = inject(Router)
+  private route = inject(ActivatedRoute)
 
   private todosCollection = collection(this.firestore, 'todos');
 
@@ -60,6 +67,23 @@ export class TodosFirebaseService {
     const promise = updateDoc(docRef, { isCompleted });
 
     return from(promise);
+  }
+
+  setFilter(filter: Filter) {
+    this.filter.set(filter)
+    if (filter !== Filter.all) {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { filter },
+        queryParamsHandling: 'merge'
+      }).then()
+    } else {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { filter: null },
+        queryParamsHandling: 'merge'
+      }).then()
+    }
   }
 
 }

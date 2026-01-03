@@ -3,8 +3,15 @@ import { Login } from './views/login/login';
 import { Signup } from './views/signup/signup';
 import { loginSignupGuard } from './guards/login-signup-guard';
 import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { Home } from './views/home/home';
 
 export const routes: Routes = [
+  {
+    path: "",
+    component: Home,
+    title: "Home",
+    pathMatch: "full",
+  },
   {
     path: 'login',
     component: Login,

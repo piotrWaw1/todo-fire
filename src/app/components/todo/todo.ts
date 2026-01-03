@@ -4,12 +4,14 @@ import { TodosFirebaseService } from '../../services/todosFirebases/todos-fireba
 import { MatCheckbox } from '@angular/material/checkbox';
 import { TodoInterface } from '../../type/todo.interface';
 import { MatButton } from '@angular/material/button';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-todo',
   imports: [
     MatCheckbox,
     MatButton,
+    NgClass,
   ],
   templateUrl: './todo.html',
   styleUrl: './todo.scss',

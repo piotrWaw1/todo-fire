@@ -7,11 +7,12 @@
         </a>
       </h1>
       <div class="flex gap-5">
-        <a matButton="outlined" routerLink="/login">login</a>
-        <a matButton="outlined" routerLink="/signup">signup</a>
-        <a matButton="outlined" routerLink="/todos">todos</a>
-        @if (authService.currentUserSig()){
-          <button (click)="logout()" matButton="outlined" >log out</button>
+        @if (authService.currentUserSig()) {
+          <a matButton="outlined" routerLink="/todos">todos</a>
+          <button (click)="logout()" matButton="outlined">log out</button>
+        } @else {
+          <a matButton="outlined" routerLink="/login">login</a>
+          <a matButton="outlined" routerLink="/signup">signup</a>
         }
       </div>
     </mat-toolbar>

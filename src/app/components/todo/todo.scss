@@ -1,4 +1,14 @@
-.deleteButton{
+.task {
+  border: solid 1px black;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.deleteButton {
   background-color: oklch(63.7% 0.237 25.331);
   padding: 0;
+}
+
+.completed {
+  text-decoration: line-through;
 }
