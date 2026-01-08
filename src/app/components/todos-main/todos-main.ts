@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { TodoService } from '../../services/todosService/todo-service';
 import { Todo } from '../todo/todo';
+import { TodosFirebaseService } from '../../services/todosFirebases/todos-firebase-service';
 
 @Component({
   selector: 'app-todos-main',
@@ -12,5 +12,5 @@ import { Todo } from '../todo/todo';
   standalone: true
 })
 export class TodosMain {
-  todosService = inject(TodoService)
+  todosFirebaseService = inject(TodosFirebaseService)
 }

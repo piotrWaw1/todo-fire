@@ -1,4 +1,4 @@
-<div [ngClass]="todo.isCompleted ?'completed' :''" class="task flex flex-row justify-between">
+<div [ngClass]="todo.isCompleted ? 'completed' :''" class="task flex flex-row justify-between">
   <mat-checkbox [checked]="todo.isCompleted" (change)="toggleTodo()">{{ todo.title }}</mat-checkbox>
   <button matButton="filled" (click)="deleteTodo()" class="deleteButton">Delete</button>
 </div>

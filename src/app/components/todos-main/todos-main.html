@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-2 max-h-150 overflow-y-auto">
-  @for (todo of todosService.todos(); track $index) {
+  @for (todo of todosFirebaseService.filteredTodos(); track todo.id) {
     <app-todo [todo]="todo"/>
   } @empty {
     <div class="no-todos">No todos found</div>

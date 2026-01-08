@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import {
   addDoc,
   collection,
@@ -23,14 +23,27 @@ export class TodosFirebaseService {
   private firestore = inject(Firestore);
   private authService = inject(AuthService);
 
+  private todos = signal<TodoInterface[]>([])
   filter = signal<Filter>(Filter.all)
+
+
+  filteredTodos = computed(() => {
+    if (this.filter() === Filter.done) {
+      return this.todos().filter((todo) => todo.isCompleted)
+    } else if (this.filter() === Filter.inProgress) {
+      return this.todos().filter((todo) => !todo.isCompleted)
+    }
+
+    return this.todos()
+  })
 
   private router = inject(Router)
   private route = inject(ActivatedRoute)
 
   private todosCollection = collection(this.firestore, 'todos');
 
-  getTodos(): Observable<TodoInterface[]> {
+  loadTodos(): void {
+    console.log("download todos")
     const uid = this.authService.currentUserSig()?.uid
 
     const q = query(
@@ -38,12 +51,13 @@ export class TodosFirebaseService {
       where('uid', '==', uid)
     )
 
-    return collectionData(q, {
+    collectionData(q, {
       idField: 'id'
-    }) as Observable<TodoInterface[]>
+    }).subscribe((data => this.todos.set(data as TodoInterface[])))
   }
 
   addTodo(text: string): Observable<string> {
+    console.log("add todos")
     const uid = this.authService.currentUserSig()?.uid
     const todoToCreate = { uid, title: text, isCompleted: false }
 
@@ -59,7 +73,7 @@ export class TodosFirebaseService {
     const docRef = doc(this.todosCollection, id)
     const promise = deleteDoc(docRef);
 
-    return from(promise);
+    return from(promise)
   }
 
   toggleTodo(id: string, isCompleted: boolean): Observable<void> {
@@ -71,6 +85,7 @@ export class TodosFirebaseService {
 
   setFilter(filter: Filter) {
     this.filter.set(filter)
+
     if (filter !== Filter.all) {
       this.router.navigate([], {
         relativeTo: this.route,

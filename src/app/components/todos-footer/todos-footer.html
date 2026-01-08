@@ -1,7 +1,5 @@
 <div id="footer">
-  <p>Finished: {{ todoCompletedCount() }}
-    of {{ todosLen() }}
-  </p>
+  <p>{{ todoFireService.filteredTodos() | todosInfo:todoFireService.filter() }}</p>
   <div id="filterButtons">
     <button
       (click)="todoFireService.setFilter(Filter.all)"
