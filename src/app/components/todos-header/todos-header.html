@@ -1,4 +1,8 @@
-<mat-form-field class="w-full">
-  <mat-label>Add task</mat-label>
-  <input matInput name="addTodo" type="text" (keydown.enter)="addTodo()" [(ngModel)]="todoTitle">
-</mat-form-field>
+<div class="flex flex-row gap-2">
+  <mat-form-field class="w-full">
+    <mat-label>Add task</mat-label>
+    <input matInput name="addTodo" type="text" (keydown.enter)="addTodo()" [(ngModel)]="todoTitle">
+  </mat-form-field>
+  <button (click)="addTodo()"><lucide-angular [size]="42" [img]="PlusIcon" class="my-icon"></lucide-angular></button>
+</div>
+

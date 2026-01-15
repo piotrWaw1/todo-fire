@@ -43,7 +43,6 @@ export class TodosFirebaseService {
   private todosCollection = collection(this.firestore, 'todos');
 
   loadTodos(): void {
-    console.log("download todos")
     const uid = this.authService.currentUserSig()?.uid
 
     const q = query(

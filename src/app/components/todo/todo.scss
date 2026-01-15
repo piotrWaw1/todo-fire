@@ -5,8 +5,18 @@
 }
 
 .deleteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 40px;
   background-color: oklch(63.7% 0.237 25.331);
   padding: 0;
+  border-radius: 10px;
+}
+.deleteButton:hover {
+  background-color: oklch(0.587 0.224 25.553);
+  cursor: pointer;
 }
 
 .completed {

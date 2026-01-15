@@ -1,5 +1,38 @@
-#title{
+#title {
   font-weight: bold;
   font-size: 40px;
   margin-right: 20px;
 }
+
+#navbar {
+  border-radius: 5px;
+}
+
+.nav-buttons {
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 8px 15px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #008eff;
+    color: white;
+  }
+}
+
+.nav-active-button {
+  background-color: #008eff;
+  color: white !important;
+}
+
+#logout-button {
+  @extend .nav-buttons;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ef4444;
+    color: white;
+  }
+}
+
