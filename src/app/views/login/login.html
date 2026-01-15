@@ -16,6 +16,12 @@
         {{ loginForm.get("password")?.errors | errorMessage }}
       </mat-error>
     </mat-form-field>
-    <button matButton="filled" type="submit">Log in</button>
+    <button [disabled]="authService.isPending()" matButton="filled" type="submit">
+      @if(authService.isPending()){
+        <lucide-icon [img]="LoaderCircle" class="my-icon loader-spinning"></lucide-icon>
+      } @else {
+        Login
+      }
+    </button>
   </form>
 </div>

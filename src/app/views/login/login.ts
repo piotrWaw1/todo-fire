@@ -6,6 +6,8 @@ import { MatButton } from '@angular/material/button';
 import { ErrorMessagePipe } from '../../pipe/error-message-pipe';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { LucideAngularModule, LoaderCircle } from 'lucide-angular';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,7 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     MatButton,
     ErrorMessagePipe,
+    LucideAngularModule
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -23,6 +26,8 @@ import { Router } from '@angular/router';
 })
 export class Login {
   errorMessage = signal<string | null>(null)
+
+  readonly LoaderCircle = LoaderCircle
 
   fb = inject(NonNullableFormBuilder)
   authService = inject(AuthService)
@@ -36,13 +41,19 @@ export class Login {
   onSubmit() {
     const formValue = this.loginForm.getRawValue()
 
-    this.authService.login(formValue.email, formValue.password).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/').then();
-      },
-      error: (err) => {
-        this.errorMessage.set(err.code)
-      }
-    })
+    this.authService.isPending.set(true)
+
+    this.authService.login(formValue.email, formValue.password)
+      .pipe(
+        finalize(() => this.authService.isPending.set(false))
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl('/').then();
+        },
+        error: (err) => {
+          this.errorMessage.set(err.code)
+        }
+      })
   }
 }

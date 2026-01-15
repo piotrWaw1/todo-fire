@@ -12,6 +12,8 @@ import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { LucideAngularModule, LoaderCircle } from 'lucide-angular';
+import { finalize } from 'rxjs';
 
 
 export function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -25,7 +27,8 @@ export function passwordMatchValidator(control: AbstractControl): ValidationErro
     ErrorMessagePipe,
     ReactiveFormsModule,
     MatInput,
-    MatButton
+    MatButton,
+    LucideAngularModule
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
@@ -33,6 +36,8 @@ export function passwordMatchValidator(control: AbstractControl): ValidationErro
 })
 export class Signup {
   errorMessage = signal<string | null>(null)
+
+  readonly LoaderCircle = LoaderCircle
 
   fb = inject(NonNullableFormBuilder)
   router = inject(Router)
@@ -47,15 +52,21 @@ export class Signup {
   }, { validators: passwordMatchValidator })
 
   onSubmit() {
+    this.authService.isPending.set(true)
+
     const formValue = this.signUpForm.getRawValue()
-    console.log(formValue)
-    this.authService.signup(formValue.email, formValue.userName, formValue.password).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/').then();
-      },
-      error: (err) => {
-        this.errorMessage.set(err.code)
-      }
-    })
+
+    this.authService.signup(formValue.email, formValue.userName, formValue.password)
+      .pipe(
+        finalize(() => this.authService.isPending.set(false))
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl('/').then();
+        },
+        error: (err) => {
+          this.errorMessage.set(err.code)
+        }
+      })
   }
 }

@@ -25,6 +25,12 @@
       <mat-error>{{ signUpForm.get('repeatPassword')?.errors | errorMessage }}</mat-error>
       <mat-error>{{ signUpForm.errors | errorMessage }}</mat-error>
     </mat-form-field>
-    <button matButton="filled" type="submit">Sign up</button>
+    <button [disabled]="authService.isPending()" matButton="filled" type="submit">
+      @if (authService.isPending()) {
+        <lucide-icon [img]="LoaderCircle" class="my-icon loader-spinning"></lucide-icon>
+      } @else {
+        Sign up
+      }
+    </button>
   </form>
 </div>

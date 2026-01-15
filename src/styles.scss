@@ -41,6 +41,19 @@ body {
 //html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.loader-spinning{
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .shadow{
   -webkit-box-shadow: 0 0 30px 0 rgba(66, 68, 90, 1);
   -moz-box-shadow: 0 0 30px 0 rgba(66, 68, 90, 1);

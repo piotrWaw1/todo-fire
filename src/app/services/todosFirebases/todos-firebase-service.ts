@@ -25,6 +25,7 @@ export class TodosFirebaseService {
 
   private todos = signal<TodoInterface[]>([])
   filter = signal<Filter>(Filter.all)
+  isPending = signal(false);
 
 
   filteredTodos = computed(() => {
@@ -43,6 +44,7 @@ export class TodosFirebaseService {
   private todosCollection = collection(this.firestore, 'todos');
 
   loadTodos(): void {
+
     const uid = this.authService.currentUserSig()?.uid
 
     const q = query(
