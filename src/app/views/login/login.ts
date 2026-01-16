@@ -26,6 +26,7 @@ import { LucideAngularModule, LoaderCircle } from 'lucide-angular';
 })
 export class Login {
   errorMessage = signal<string | null>(null)
+  isSubmitting = signal<boolean>(false)
 
   readonly LoaderCircle = LoaderCircle
 
@@ -41,11 +42,11 @@ export class Login {
   onSubmit() {
     const formValue = this.loginForm.getRawValue()
 
-    this.authService.isPending.set(true)
+    this.isSubmitting.set(true)
 
     this.authService.login(formValue.email, formValue.password)
       .pipe(
-        finalize(() => this.authService.isPending.set(false))
+        finalize(() => this.isSubmitting.set(false))
       )
       .subscribe({
         next: () => {

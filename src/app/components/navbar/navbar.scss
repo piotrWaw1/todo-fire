@@ -8,11 +8,16 @@
   border-radius: 5px;
 }
 
-.nav-buttons {
+%nav-button-base {
   font-size: 20px;
   border: 1px solid black;
   border-radius: 5px;
   padding: 8px 15px;
+}
+
+.nav-buttons {
+  @extend %nav-button-base;
+  cursor: pointer;
 
   &:hover {
     cursor: pointer;
@@ -34,5 +39,15 @@
     background-color: #ef4444;
     color: white;
   }
+}
+
+.loading-button {
+  @extend %nav-button-base;
+
+  background-color: #eaeaea;
+  border-color: #b6b6b6;
+  color: #383838;
+  cursor: wait;
+
 }
 

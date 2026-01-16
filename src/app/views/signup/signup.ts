@@ -36,6 +36,7 @@ export function passwordMatchValidator(control: AbstractControl): ValidationErro
 })
 export class Signup {
   errorMessage = signal<string | null>(null)
+  isSubmitting = signal<boolean>(false)
 
   readonly LoaderCircle = LoaderCircle
 
@@ -52,13 +53,13 @@ export class Signup {
   }, { validators: passwordMatchValidator })
 
   onSubmit() {
-    this.authService.isPending.set(true)
+    this.isSubmitting.set(true)
 
     const formValue = this.signUpForm.getRawValue()
 
     this.authService.signup(formValue.email, formValue.userName, formValue.password)
       .pipe(
-        finalize(() => this.authService.isPending.set(false))
+        finalize(() => this.isSubmitting.set(false))
       )
       .subscribe({
         next: () => {

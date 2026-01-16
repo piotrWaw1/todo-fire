@@ -8,12 +8,16 @@
       for everything.
     </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      @if (authService.currentUserSig()) {
-        <button matButton="filled" class="text-base px-8" routerLink="/todos">
+      @if (authService.isPending()) {
+        <button matButton="filled" class="text-base px-8 w-42" disabled="disabled">
+          <lucide-icon [img]="LoaderCircle" class="my-icon loader-spinning"></lucide-icon>
+        </button>
+      } @else if (authService.currentUserSig()) {
+        <button matButton="filled" class="text-base px-8 w-42" routerLink="/todos">
           Check yours todos
         </button>
       } @else {
-        <button matButton="filled" class="text-base px-8" routerLink="/login">
+        <button matButton="filled" class="text-base px-8 w-42" routerLink="/login">
           Start for free
         </button>
       }

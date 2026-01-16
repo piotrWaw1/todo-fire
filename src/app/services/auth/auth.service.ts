@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -6,16 +6,28 @@ import {
   updateProfile, user
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
-import { UserInterface } from '../../type/user.interface';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   firebaseAuth = inject(Auth)
-  isPending = signal<boolean>(false)
   user$ = user(this.firebaseAuth)
-  currentUserSig = signal<UserInterface | null | undefined>(undefined);
+
+  private userSignal = toSignal(this.user$);
+  isPending = computed(() => this.userSignal() === undefined);
+
+  currentUserSig = computed(() => {
+    const user = this.userSignal();
+    if (!user) return null;
+
+    return {
+      email: user.email!,
+      username: user.displayName!,
+      uid: user.uid
+    };
+  });
 
   signup(email: string, username: string, password: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)

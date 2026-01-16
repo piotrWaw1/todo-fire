@@ -7,7 +7,11 @@
         </a>
       </h1>
       <div class="flex items-center justify-between w-full">
-        @if (authService.currentUserSig()) {
+        @if (authService.isPending()) {
+          <button disabled="disabled" class="loading-button">
+            <lucide-icon [img]="LoaderCircle" class="my-icon loader-spinning"></lucide-icon>
+          </button>
+        } @else if (authService.currentUserSig()) {
           <a routerLink="/todos" routerLinkActive="nav-active-button" class="nav-buttons">Todos</a>
           <button (click)="logout()"
                   id="logout-button"
